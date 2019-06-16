@@ -1,5 +1,5 @@
 module.exports = {
-  up: (queryInterface, Sequelize) => queryInterface.createTable('users', {
+  up: (queryInterface, Sequelize) => queryInterface.createTable('promotions', {
     id: {
       allowNull: false,
       autoIncrement: true,
@@ -10,33 +10,30 @@ module.exports = {
       allowNull: false,
       type: Sequelize.STRING,
     },
-    email: {
+    minimum_days: {
       allowNull: false,
-      unique: true,
-      type: Sequelize.STRING,
-    },
-    password_hash: {
-      allowNull: false,
-      type: Sequelize.STRING,
-    },
-    age: {
-      allowNull: false,
+      defaultValue: 0,
       type: Sequelize.INTEGER,
     },
-    is_admin: {
+    start_day: {
       allowNull: false,
-      defaultValue: false,
+      defaultValue: 0,
+      type: Sequelize.INTEGER,
+    },
+    isActive: {
+      allowNull: false,
+      defaultValue: true,
       type: Sequelize.BOOLEAN,
     },
-    is_student: {
+    percentual: {
       allowNull: false,
-      defaultValue: false,
-      type: Sequelize.BOOLEAN,
+      defaultValue: 0,
+      type: Sequelize.FLOAT,
     },
     created_at: Sequelize.DATE,
     updated_at: Sequelize.DATE,
     deleted_at: Sequelize.DATE,
   }),
 
-  down: queryInterface => queryInterface.dropTable('users'),
+  down: queryInterface => queryInterface.dropTable('promotions'),
 };
