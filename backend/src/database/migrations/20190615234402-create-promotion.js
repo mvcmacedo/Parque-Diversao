@@ -20,7 +20,7 @@ module.exports = {
       defaultValue: 0,
       type: Sequelize.INTEGER,
     },
-    isActive: {
+    is_active: {
       allowNull: false,
       defaultValue: true,
       type: Sequelize.BOOLEAN,

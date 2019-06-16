@@ -20,7 +20,7 @@ module.exports = {
       allowNull: false,
       type: Sequelize.DATE,
     },
-    isConfirmed: {
+    is_confirmed: {
       allowNull: false,
       defaultValue: false,
       type: Sequelize.BOOLEAN,
