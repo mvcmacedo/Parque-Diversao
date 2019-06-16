@@ -1,9 +1,18 @@
 const express = require('express');
 
-const routes = express.Router();
+const AuthMiddleware = require('../middlewares/auth');
 
-routes.get('/', (req, res, next) => {
-  res.send('Hello World');
-});
+const PassportRoute = require('./passport');
+const SessionRoute = require('./session');
+const PromotionRoute = require('./promotion');
 
-module.exports = routes;
+const router = express.Router();
+
+router.use('/session', SessionRoute);
+
+router.use(AuthMiddleware.authenticate);
+
+router.use('/passport', PassportRoute);
+router.use('/promotion', PromotionRoute);
+
+module.exports = router;

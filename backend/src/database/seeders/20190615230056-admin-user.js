@@ -7,6 +7,7 @@ module.exports = {
     [
       {
         name: 'Jian Yang',
+        username: 'mr.jian',
         email: 'mr.jian@piedpiper.com',
         age: 50,
         password_hash: await bcrypt.hash('thisisyourmom', 8),
@@ -16,6 +17,7 @@ module.exports = {
       },
       {
         name: 'Bertram Gilfoyle',
+        username: 'Gilf',
         email: 'gilfoyle@piedpiper.com',
         age: 30,
         password_hash: await bcrypt.hash('satanrules', 8),
@@ -25,6 +27,7 @@ module.exports = {
       },
       {
         name: 'Gavin Belson',
+        username: 'GavB',
         email: 'gavinb@hooli.com',
         age: 66,
         password_hash: await bcrypt.hash('motherfucker', 8),

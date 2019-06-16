@@ -1,6 +1,9 @@
 /* eslint-disable no-param-reassign */
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const Sequelize = require('sequelize');
+
+const AuthConfig = require('../config/auth');
 
 class User extends Sequelize.Model {
   static init(sequelize, DataTypes) {
@@ -30,6 +33,10 @@ class User extends Sequelize.Model {
 
   checkPassword(password) {
     return bcrypt.compare(password, this.password_hash);
+  }
+
+  static generateToken({ id }) {
+    return jwt.sign({ id }, AuthConfig.secret, { expiresIn: AuthConfig.ttl });
   }
 }
 

@@ -6,10 +6,7 @@ module.exports = {
       primaryKey: true,
       type: Sequelize.INTEGER,
     },
-    code: {
-      allowNull: false,
-      type: Sequelize.STRING,
-    },
+    code: Sequelize.STRING,
     cost: {
       allowNull: false,
       type: Sequelize.FLOAT,
@@ -33,6 +30,11 @@ module.exports = {
       onUpdate: 'CASCADE',
       onDelete: 'CASCADE',
       allowNull: false,
+    },
+    status: {
+      allowNull: false,
+      defaultValue: 'Quoted',
+      type: Sequelize.STRING,
     },
     created_at: Sequelize.DATE,
     updated_at: Sequelize.DATE,
