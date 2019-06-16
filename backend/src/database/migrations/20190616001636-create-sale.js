@@ -20,11 +20,6 @@ module.exports = {
       allowNull: false,
       type: Sequelize.DATE,
     },
-    is_confirmed: {
-      allowNull: false,
-      defaultValue: false,
-      type: Sequelize.BOOLEAN,
-    },
     created_at: Sequelize.DATE,
     updated_at: Sequelize.DATE,
     deleted_at: Sequelize.DATE,

@@ -8,6 +8,8 @@ router.get('/', PassportController.get);
 
 router.post('/budget', PassportController.budget);
 
-router.put('/buy', PassportController.buy);
+router.post('/validate', PassportController.validate);
+
+router.put('/buy/:id', PassportController.buy);
 
 module.exports = router;

@@ -1,5 +1,6 @@
 const R = require('ramda');
 
+const { Error, response } = require('../helpers');
 const { User } = require('../models');
 
 class SessionController {
@@ -11,18 +12,20 @@ class SessionController {
       const user = await User.findOne({ where: R.omit(['password'], data) });
 
       if (!user) {
-        return res.status(404).json({ error: 'User not found' });
+        throw new Error('User not found', 404);
       }
 
       const validPassword = await user.checkPassword(data.password);
 
       if (!validPassword) {
-        return res.status(401).json({ error: 'Wrong user or password' });
+        throw new Error('Wrong user password combination', 401);
       }
 
-      return res.status(201).json({ user, token: User.generateToken(user) });
+      return response(res, 201, null, { user, token: User.generateToken(user) });
     } catch (err) {
-      return res.status(500).json(err);
+      const status = err.http_code || 500;
+
+      return response(res, status, err);
     }
   }
 }

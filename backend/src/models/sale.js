@@ -6,7 +6,6 @@ class Sale extends Sequelize.Model {
       {
         amount: DataTypes.FLOAT,
         date: DataTypes.DATE,
-        is_confirmed: DataTypes.BOOLEAN,
         passport_id: DataTypes.INTEGER,
       },
       {

@@ -1,15 +1,39 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable no-await-in-loop */
 const R = require('ramda');
+const moment = require('moment');
 
-const { Promotion, Passport } = require('../models');
+const { Error } = require('../helpers');
+const { Promotion, Passport, PassportPromotion } = require('../models');
 
 class PassportService {
-  static async create(passport) {
-    return Passport.create(passport);
+  static async create(data) {
+    const passport = await Passport.create(data).catch((err) => {
+      throw new Error(`Create passport failed: ${err.message}`);
+    });
+
+    return passport;
   }
 
-  static async applyPromotions({ promotions = {}, days = 1 }) {
+  static async get(filters = {}) {
+    const passports = await Passport.findAll({ where: filters }).catch((err) => {
+      throw new Error(`Get passports failed: ${err.message}`);
+    });
+
+    return passports;
+  }
+
+  static async update(data, filters = {}) {
+    if (R.isEmpty(filters)) {
+      return;
+    }
+
+    await Passport.update(data, { where: filters }).catch((err) => {
+      throw new Error(`Update passport failed: ${err.message}`);
+    });
+  }
+
+  static async applyPromotions({ promotions = [], days = 1 }) {
     let cost = 100 * days;
 
     if (R.isEmpty(promotions)) {
@@ -45,7 +69,33 @@ class PassportService {
       cost -= discount;
     }
 
-    return cost;
+    return cost.toFixed(2);
+  }
+
+  /* eslint-disable camelcase */
+  static async storePromotions(promotions = [], passport_id) {
+    if (R.isEmpty(promotions)) {
+      return;
+    }
+
+    for (const promotion_id of promotions) {
+      await PassportPromotion.create({ promotion_id, passport_id }).catch((err) => {
+        throw new Error(
+          `Store passport ${passport_id} promotion ${promotion_id} failed: ${err.message}`,
+        );
+      });
+    }
+  }
+
+  static async validate(passport = {}) {
+    if (R.isEmpty(passport)) {
+      return false;
+    }
+
+    const today = moment().format('YYYY-MM-DD HH:mm:ss');
+    const initial_date = moment(passport.initial_date);
+
+    return initial_date.isSameOrBefore(today) && passport.entries < passport.days;
   }
 }
 

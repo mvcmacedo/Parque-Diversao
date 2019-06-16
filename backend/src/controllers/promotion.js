@@ -1,5 +1,6 @@
 const R = require('ramda');
 
+const { response } = require('../helpers');
 const { PromotionService } = require('../services');
 
 class PromotionController {
@@ -10,9 +11,11 @@ class PromotionController {
 
       const promotions = await PromotionService.get({ ...filters, is_active: true });
 
-      res.status(200).json(promotions);
-    } catch (error) {
-      res.status(500).json({ error });
+      return response(res, 200, null, promotions);
+    } catch (err) {
+      const status = err.http_code || 500;
+
+      return response(res, status, err);
     }
   }
 }

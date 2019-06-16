@@ -6,6 +6,7 @@ class Passport extends Sequelize.Model {
       {
         code: DataTypes.STRING,
         cost: DataTypes.FLOAT,
+        status: DataTypes.STRING,
         initial_date: DataTypes.DATE,
         days: DataTypes.INTEGER,
         entries: DataTypes.INTEGER,
