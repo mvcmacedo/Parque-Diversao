@@ -25,7 +25,7 @@ class PassportService {
 
   static async update(data, filters = {}) {
     if (R.isEmpty(filters)) {
-      return;
+      throw new Error('Filters not sent');
     }
 
     await Passport.update(data, { where: filters }).catch((err) => {

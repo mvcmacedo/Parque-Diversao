@@ -26,6 +26,24 @@ class AuthMiddleware {
       return res.status(401).json({ error: 'Invalid token' });
     }
   }
+
+  static isAdmin(req, res, next) {
+    try {
+      if (!req.user) {
+        return res.status(401).json({ error: 'User not authenticated' });
+      }
+
+      const isAdmin = req.user.is_admin;
+
+      if (!isAdmin) {
+        return res.status(401).json({ error: 'User not authorized' });
+      }
+
+      return next();
+    } catch (err) {
+      return res.status(401).json({ error: 'Authentication failed' });
+    }
+  }
 }
 
 module.exports = AuthMiddleware;
