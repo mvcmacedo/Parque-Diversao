@@ -18,7 +18,7 @@ class SessionController {
       const validPassword = await user.checkPassword(data.password);
 
       if (!validPassword) {
-        throw new Error('Wrong user password combination', 401);
+        throw new Error('Wrong user credentials', 401);
       }
 
       return response(res, 201, null, { user, token: User.generateToken(user) });

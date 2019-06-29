@@ -6,7 +6,7 @@ const { Random } = require('random-js');
 const { Error, response } = require('../helpers');
 
 const { Sale, Entries } = require('../models');
-const { PassportService } = require('../services');
+const { PassportService, UserService } = require('../services');
 
 const random = new Random();
 
@@ -20,7 +20,13 @@ class PassportController {
       const pick = ['initial_date', 'days', 'promotions'];
       const data = R.pick(pick, req.body);
 
-      const { id: user_id } = req.user;
+      const { email } = req.body;
+
+      const [user] = await UserService.get({ email });
+
+      if (!user) {
+        throw new Error('User not Found', 404);
+      }
 
       const cost = await PassportService.applyPromotions(data).catch(() => {
         throw new Error('Failed to apply promotions');
@@ -28,8 +34,8 @@ class PassportController {
 
       const passport = {
         ...data,
-        user_id,
         cost,
+        user_id: user.id,
       };
 
       const budget = await PassportService.create(passport);

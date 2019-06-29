@@ -13,10 +13,10 @@ const sequelize = new Sequelize(config.database, config.username, config.passwor
 
 const models = {
   User: UserModel.init(sequelize, Sequelize),
-  Passport: PassportModel.init(sequelize, Sequelize),
-  Promotion: PromotionModel.init(sequelize, Sequelize),
   Sale: SaleModel.init(sequelize, Sequelize),
   Entries: EntriesModel.init(sequelize, Sequelize),
+  Passport: PassportModel.init(sequelize, Sequelize),
+  Promotion: PromotionModel.init(sequelize, Sequelize),
   PassportPromotion: PassportPromotionModel.init(sequelize, Sequelize),
 };
 
