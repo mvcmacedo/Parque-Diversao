@@ -15,6 +15,8 @@ export const isAdmin = () => {
 
 export const getToken = () => localStorage.getItem(TOKEN_KEY);
 
+export const getUser = () => localStorage.getItem(LOGGED_USER);
+
 /* eslint-disable camelcase */
 export const login = ({
   token, name, email, is_student, is_admin, age,

@@ -1,31 +1,37 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 
+import { Link } from 'react-router-dom';
+
 import {
-  Container, Content, Title, Login,
+  Container, Content, Title, Login, UserName,
 } from './style';
 
-import { isAuthenticated } from '../../services/auth';
+import { isAuthenticated, getUser } from '../../services/auth';
 
 import logo from '../../assets/logo.png';
+import logout from '../../assets/logout.png';
 
 const LoginArea = isAuthenticated() ? (
-  'Olá'
-) : (
   <>
+    <UserName>
+      Olá,
+      {getUser().username}
+    </UserName>
     <div>
-      <Button variant="outline-light">SingIn</Button>
-    </div>
-    <div>
-      <Button variant="outline-light">SingUp</Button>
+      <img src={logout} alt="logout" />
     </div>
   </>
+) : (
+  <Button variant="outline-light">Entrar</Button>
 );
 
 const Header = () => (
   <Container>
     <Content>
-      <img src={logo} alt="logo" />
+      <Link to="/">
+        <img src={logo} alt="logo" />
+      </Link>
       <Title>Parque de Diversão PSA</Title>
       <Login>{LoginArea}</Login>
     </Content>

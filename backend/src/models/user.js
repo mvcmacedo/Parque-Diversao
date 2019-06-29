@@ -10,6 +10,7 @@ class User extends Sequelize.Model {
     return super.init(
       {
         name: DataTypes.STRING,
+        username: DataTypes.STRING,
         email: DataTypes.STRING,
         password: DataTypes.VIRTUAL,
         password_hash: DataTypes.STRING,
