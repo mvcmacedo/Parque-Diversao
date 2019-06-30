@@ -1,7 +1,7 @@
 export const TOKEN_KEY = 'PARK_TOKEN';
 export const LOGGED_USER = 'PARK_USER';
 
-export const isAuthenticated = () => localStorage.getItem(TOKEN_KEY);
+export const isAuthenticated = () => Boolean(localStorage.getItem(TOKEN_KEY));
 
 export const isAdmin = () => {
   const user = JSON.parse(localStorage.getItem(LOGGED_USER));

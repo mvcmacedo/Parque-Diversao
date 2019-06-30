@@ -28,6 +28,21 @@ class UserController {
       return response(res, 500, err);
     }
   }
+
+  static async update(req, res) {
+    try {
+      const { id } = req.params;
+
+      const pick = ['is_admin'];
+      const data = R.pick(pick, req.body);
+
+      await UserService.update(data, { id });
+
+      return response(res, 201, null);
+    } catch (err) {
+      return response(res, 500, err);
+    }
+  }
 }
 
 module.exports = UserController;

@@ -10,5 +10,6 @@ router.post('/', UserController.create);
 router.use(AuthMiddleware.authenticate, AuthMiddleware.isAdmin);
 
 router.get('/', UserController.list);
+router.put('/:id', UserController.update);
 
 module.exports = router;

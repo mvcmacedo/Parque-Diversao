@@ -12,6 +12,7 @@ import Validate from '../screens/Validate';
 import Sale from '../screens/Sale';
 import Entries from '../screens/Entries';
 import Promotion from '../screens/Promotion';
+import User from '../screens/User';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
@@ -59,7 +60,7 @@ const Routes = () => (
     <AdminRoute path="/promocoes" component={Promotion} />
     <AdminRoute path="/entradas" component={Entries} />
     <AdminRoute path="/vendas" component={Sale} />
-    <AdminRoute path="/usuarios" component={() => <h1>Oi admin</h1>} />
+    <AdminRoute path="/usuarios" component={User} />
   </Switch>
 );
 

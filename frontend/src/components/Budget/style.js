@@ -15,6 +15,13 @@ export const FormTitle = Styled.h2`
   margin-bottom: 5%;
 `;
 
+export const LinkWrapper = Styled.div`
+  display: flex;
+  justify-content: flex-end;
+  font-size: 14px;
+  margin: 10px;
+`;
+
 export const ButtonWrapper = Styled.div`
   display: flex;
   justify-content: flex-end;

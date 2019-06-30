@@ -6,7 +6,10 @@ import {
 
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { Container, FormTitle, ButtonWrapper } from './style';
+
+import {
+  Container, FormTitle, ButtonWrapper, LinkWrapper,
+} from './style';
 
 import api from '../../services/api';
 import { isAuthenticated } from '../../services/auth';
@@ -104,6 +107,12 @@ const Budget = () => {
             onChange={e => setEmail(e.target.value)}
           />
         </Form.Group>
+
+        {!isAuthenticated() && (
+          <LinkWrapper>
+            <Link to="/signup">Não tem conta? Clique aqui.</Link>
+          </LinkWrapper>
+        )}
 
         <Form.Row>
           <Form.Group id="" onChange={handlePromotion}>
