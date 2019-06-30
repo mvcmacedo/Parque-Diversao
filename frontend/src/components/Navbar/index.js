@@ -14,8 +14,8 @@ const NavBar = () => (
         {isAuthenticated() && <Nav.Link href="/meus-passaportes">Meus Passaportes</Nav.Link>}
         {isAdmin() && (
           <>
-            <Nav.Link href="">Vendas</Nav.Link>
-            <Nav.Link href="">Entradas</Nav.Link>
+            <Nav.Link href="/vendas">Vendas</Nav.Link>
+            <Nav.Link href="/entradas">Entradas</Nav.Link>
           </>
         )}
       </Nav>

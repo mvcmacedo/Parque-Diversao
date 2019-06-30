@@ -10,7 +10,7 @@ const Passport = () => {
 
   useEffect(() => {
     async function fetchPassports() {
-      const passportsList = await api.get('/passport');
+      const passportsList = await api.get('/passport?order=DESC');
 
       setPassports(passportsList.data.data);
     }

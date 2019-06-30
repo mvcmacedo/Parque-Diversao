@@ -6,7 +6,7 @@ const { SaleService } = require('../services');
 class SaleController {
   static async list(req, res) {
     try {
-      const pick = ['after', 'before', 'month', 'day', 'groupBy'];
+      const pick = ['after', 'before', 'month', 'day', 'groupBy', 'order'];
       const filters = R.pick(pick, req.query);
 
       const sales = await SaleService.get(filters).catch((err) => {

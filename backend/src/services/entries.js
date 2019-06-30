@@ -9,17 +9,25 @@ class EntriesService {
   static async get(filters = {}) {
     const filter = {};
     const where = {};
+    const order = [];
     const group = [];
     const attributes = [];
 
+    if (filters.order) {
+      order.push(['id', filters.order]);
+      filter.order = order;
+    }
+
     if (filters.after) {
       where.date = {
+        ...where.date,
         [Op.gte]: filters.after,
       };
     }
 
     if (filters.before) {
       where.date = {
+        ...where.date,
         [Op.lte]: filters.before,
       };
     }
@@ -38,7 +46,7 @@ class EntriesService {
 
     filter.where = where;
 
-    if (filters.groupBy) {
+    if (filters.groupBy && (filters.groupBy === 'day' || filters.groupBy === 'month')) {
       if (filters.groupBy === 'day') {
         group.push([Sequelize.fn('DAY', Sequelize.col('date'))]);
         attributes.push(

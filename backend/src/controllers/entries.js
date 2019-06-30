@@ -6,7 +6,7 @@ const { EntriesService } = require('../services');
 class EntriesController {
   static async list(req, res) {
     try {
-      const pick = ['after', 'before', 'month', 'day', 'groupBy'];
+      const pick = ['after', 'before', 'month', 'day', 'groupBy', 'order'];
       const filters = R.pick(pick, req.query);
 
       const entries = await EntriesService.get(filters).catch((err) => {

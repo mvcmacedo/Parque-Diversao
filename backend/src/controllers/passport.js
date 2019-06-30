@@ -11,9 +11,15 @@ const { PassportService, UserService } = require('../services');
 const random = new Random();
 
 class PassportController {
+  /* eslint-disable no-underscore-dangle */
   static async list(req, res) {
     try {
-      const filters = !req.user.is_admin ? { user_id: req.user.id } : {};
+      const userIdFilter = !req.user.is_admin ? { user_id: req.user.id } : {};
+
+      const pick = ['order'];
+      const __filters__ = R.pick(pick, req.query);
+
+      const filters = { ...userIdFilter, ...__filters__ };
 
       const passports = await PassportService.get(filters);
 

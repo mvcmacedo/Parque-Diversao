@@ -16,7 +16,15 @@ class PassportService {
   }
 
   static async get(filters = {}) {
-    const passports = await Passport.findAll({ where: filters }).catch((err) => {
+    let order;
+
+    /* eslint-disable no-param-reassign */
+    if (filters.order) {
+      order = [['id', filters.order]];
+      delete filters.order;
+    }
+
+    const passports = await Passport.findAll({ where: filters, order }).catch((err) => {
       throw new Error(`Get passports failed: ${err.message}`);
     });
 
