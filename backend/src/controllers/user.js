@@ -1,3 +1,5 @@
+const R = require('ramda');
+
 const { response } = require('../helpers');
 const { UserService } = require('../services');
 
@@ -11,6 +13,19 @@ class UserController {
       const status = err.http_status || 500;
 
       return response(res, status, err);
+    }
+  }
+
+  static async create(req, res) {
+    try {
+      const pick = ['name', 'username', 'email', 'password', 'age', 'is_student'];
+      const data = R.pick(pick, req.body);
+
+      const user = await UserService.create(data);
+
+      return response(res, 201, null, user);
+    } catch (err) {
+      return response(res, 500, err);
     }
   }
 }

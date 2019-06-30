@@ -9,6 +9,10 @@ class UserService {
 
     return users;
   }
+
+  static async create(data) {
+    return User.create(data);
+  }
 }
 
 module.exports = UserService;

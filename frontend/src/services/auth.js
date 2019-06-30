@@ -1,10 +1,10 @@
-export const TOKEN_KEY = '';
-export const LOGGED_USER = '';
+export const TOKEN_KEY = 'PARK_TOKEN';
+export const LOGGED_USER = 'PARK_USER';
 
 export const isAuthenticated = () => localStorage.getItem(TOKEN_KEY);
 
 export const isAdmin = () => {
-  const user = localStorage.getItem(LOGGED_USER);
+  const user = JSON.parse(localStorage.getItem(LOGGED_USER));
 
   if (!user) {
     return false;
@@ -15,23 +15,19 @@ export const isAdmin = () => {
 
 export const getToken = () => localStorage.getItem(TOKEN_KEY);
 
-export const getUser = () => localStorage.getItem(LOGGED_USER);
+export const getUser = () => JSON.parse(localStorage.getItem(LOGGED_USER));
 
 /* eslint-disable camelcase */
-export const login = ({
-  token, name, email, is_student, is_admin, age,
-}) => {
+export const login = ({ token, user }) => {
   localStorage.setItem(TOKEN_KEY, token);
-  localStorage.setItem(LOGGED_USER, {
-    name,
-    email,
-    is_student,
-    is_admin,
-    age,
-  });
+  localStorage.setItem(LOGGED_USER, JSON.stringify(user));
+
+  window.location.reload();
 };
 
 export const logout = () => {
   localStorage.removeItem(TOKEN_KEY);
   localStorage.removeItem(LOGGED_USER);
+
+  window.location.reload();
 };

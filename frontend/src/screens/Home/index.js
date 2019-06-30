@@ -1,9 +1,12 @@
 import React from 'react';
 
+import { Container } from './style';
+import Budget from '../../components/Budget';
+
 const Home = () => (
-  <div>
-    <h1>Jian Yang Home Page</h1>
-  </div>
+  <Container>
+    <Budget />
+  </Container>
 );
 
 export default Home;

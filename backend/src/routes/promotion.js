@@ -5,9 +5,10 @@ const { PromotionController } = require('../controllers');
 
 const router = express.Router();
 
+router.get('/', PromotionController.list);
+
 router.use(AuthMiddleware.isAdmin);
 
-router.get('/', PromotionController.list);
 router.put('/:id', PromotionController.update);
 
 module.exports = router;

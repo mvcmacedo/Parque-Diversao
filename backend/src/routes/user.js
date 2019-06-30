@@ -5,7 +5,9 @@ const { UserController } = require('../controllers');
 
 const router = express.Router();
 
-router.use(AuthMiddleware.isAdmin);
+router.post('/', UserController.create);
+
+router.use(AuthMiddleware.authenticate, AuthMiddleware.isAdmin);
 
 router.get('/', UserController.list);
 

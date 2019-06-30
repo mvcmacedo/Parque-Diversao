@@ -9,7 +9,7 @@ const NavBar = () => (
   <Container>
     <Navbar bg="light" variant="light" className="navbar">
       <Nav>
-        <Nav.Link href="">Orçamento</Nav.Link>
+        <Nav.Link href="/">Orçamento</Nav.Link>
         <Nav.Link href="">Validar Passaporte</Nav.Link>
         {isAuthenticated() && <Nav.Link href="">Meus Passaportes</Nav.Link>}
         {isAdmin() && (
