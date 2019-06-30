@@ -10,8 +10,8 @@ const NavBar = () => (
     <Navbar bg="light" variant="light" className="navbar">
       <Nav>
         <Nav.Link href="/">Orçamento</Nav.Link>
-        <Nav.Link href="">Validar Passaporte</Nav.Link>
-        {isAuthenticated() && <Nav.Link href="">Meus Passaportes</Nav.Link>}
+        <Nav.Link href="/validar-passaporte">Validar Passaporte</Nav.Link>
+        {isAuthenticated() && <Nav.Link href="/meus-passaportes">Meus Passaportes</Nav.Link>}
         {isAdmin() && (
           <>
             <Nav.Link href="">Vendas</Nav.Link>

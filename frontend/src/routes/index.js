@@ -7,6 +7,8 @@ import { isAuthenticated, isAdmin } from '../services/auth';
 import Home from '../screens/Home';
 import SignIn from '../screens/SignIn';
 import SignUp from '../screens/SignUp';
+import Passport from '../screens/Passport';
+import Validate from '../screens/Validate';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
@@ -47,10 +49,10 @@ const SignRoute = ({ component: Component, ...rest }) => (
 const Routes = () => (
   <Switch>
     <Route exact path="/" component={Home} />
+    <Route exact path="/validar-passaporte" component={Validate} />
     <SignRoute exact path="/signin" component={SignIn} />
     <SignRoute exact path="/signup" component={SignUp} />
-    <Route exact path="/validar-passaporte" />
-    <PrivateRoute path="/meus-passaportes" component={() => <h1>Oi userrr</h1>} />
+    <PrivateRoute path="/meus-passaportes" component={Passport} />
     <AdminRoute path="/promocoes" component={() => <h1>Oi admin</h1>} />
     <AdminRoute path="/entradas" component={() => <h1>Oi admin</h1>} />
     <AdminRoute path="/vendas" component={() => <h1>Oi admin</h1>} />

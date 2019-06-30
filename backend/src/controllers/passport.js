@@ -11,8 +11,16 @@ const { PassportService, UserService } = require('../services');
 const random = new Random();
 
 class PassportController {
-  static async get(req, res) {
-    res.status(200);
+  static async list(req, res) {
+    try {
+      const filters = !req.user.is_admin ? { user_id: req.user.id } : {};
+
+      const passports = await PassportService.get(filters);
+
+      return response(res, 200, null, passports);
+    } catch (err) {
+      return response(res, 500, err);
+    }
   }
 
   static async budget(req, res) {
