@@ -11,6 +11,7 @@ import Passport from '../screens/Passport';
 import Validate from '../screens/Validate';
 import Sale from '../screens/Sale';
 import Entries from '../screens/Entries';
+import Promotion from '../screens/Promotion';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
@@ -55,7 +56,7 @@ const Routes = () => (
     <SignRoute exact path="/signin" component={SignIn} />
     <SignRoute exact path="/signup" component={SignUp} />
     <PrivateRoute path="/meus-passaportes" component={Passport} />
-    <AdminRoute path="/promocoes" component={() => <h1>Oi admin</h1>} />
+    <AdminRoute path="/promocoes" component={Promotion} />
     <AdminRoute path="/entradas" component={Entries} />
     <AdminRoute path="/vendas" component={Sale} />
     <AdminRoute path="/usuarios" component={() => <h1>Oi admin</h1>} />

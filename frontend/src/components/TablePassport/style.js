@@ -5,10 +5,6 @@ export const Container = Styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 2%;
-  background: #f2f2f2;
-  border: 1px solid #a6a6a6;
-  box-shadow: 1px 1px 4px #666666;
 `;
 
 export const Header = Styled.div`
@@ -27,4 +23,11 @@ export const Th = Styled.th`
 
 export const Thead = Styled.thead`
   background: #ff3399;
+`;
+
+export const TableWrapper = Styled.div`
+  margin: 2%;
+  background: #f2f2f2;
+  border: 1px solid #a6a6a6;
+  box-shadow: 1px 1px 4px #666666;
 `;

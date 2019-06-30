@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.get('/', PromotionController.list);
 
-router.use(AuthMiddleware.isAdmin);
+router.use(AuthMiddleware.authenticate, AuthMiddleware.isAdmin);
 
 router.put('/:id', PromotionController.update);
 

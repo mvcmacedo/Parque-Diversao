@@ -21,7 +21,7 @@ const Budget = () => {
 
   useEffect(() => {
     async function fetchPromos() {
-      const allPromos = await api.get('/promotion');
+      const allPromos = await api.get('/promotion?is_active=1');
 
       setPromoList(allPromos.data.data);
     }
