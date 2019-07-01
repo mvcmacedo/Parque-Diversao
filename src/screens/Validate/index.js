@@ -15,13 +15,18 @@ const Validate = () => {
     setLoading(true);
     await api
       .post('/passport/validate', { code })
-      .then(() => {
-        toast.success('Passaporte validado com sucesso!');
+      .then((response) => {
+        if (response.data.data) {
+          toast.success('Passaporte validado com sucesso!');
+        } else {
+          toast.warn('Verifique a data inicial ou as entradas do passaporte.');
+        }
+
         setLoading(false);
         setCode('');
       })
-      .catch((err) => {
-        toast.error(err.response.data.error.message);
+      .catch(() => {
+        toast.error('Código Inválido.');
         setLoading(false);
       });
   };

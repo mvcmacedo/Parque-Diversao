@@ -46,8 +46,8 @@ const SignUp = () => {
             setLoading(false);
           });
       })
-      .catch((err) => {
-        toast.error(err.response.data.error.message);
+      .catch(() => {
+        toast.error('Erro de validação.');
         setLoading(false);
       });
   };
@@ -85,7 +85,7 @@ const SignUp = () => {
               <Form.Control
                 placeholder="Digite seu e-mail "
                 value={email}
-                type="text"
+                type="email"
                 onChange={e => setEmail(e.target.value)}
               />
             </Form.Group>

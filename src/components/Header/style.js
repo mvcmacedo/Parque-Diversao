@@ -17,7 +17,8 @@ export const LogoWrapper = Styled.div`
 export const TitleWrapper = Styled.div`
   width: 33%;
 `;
-export const Title = Styled.h1`
+
+export const Title = Styled.h2`
   display: flex;
   justify-content: center;
   color: #fff;
@@ -33,7 +34,7 @@ export const Login = Styled.div`
     
     a {
       text-decoration: none;
-      color: #a6a6a6;
+      color: #666666;
     }
   }
 `;

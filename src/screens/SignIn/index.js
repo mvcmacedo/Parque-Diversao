@@ -34,8 +34,8 @@ const SignIn = () => {
     await api
       .post('/session', request)
       .then(({ data }) => login(data.data))
-      .catch((err) => {
-        toast.error(err.response.data.error.message);
+      .catch(() => {
+        toast.error('Credenciais Inválidas.');
         setLoading(false);
       });
   };
