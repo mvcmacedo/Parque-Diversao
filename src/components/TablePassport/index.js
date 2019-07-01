@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import moment from 'moment';
 
-import { Table, Button, Modal } from 'react-bootstrap';
+import { Table, Button } from 'react-bootstrap';
+
+import { ToastContainer, toast } from 'react-toastify';
+import Loader from '../Loader';
 
 import ticket from '../../assets/ticket.png';
 
@@ -11,35 +14,29 @@ import {
 
 import api from '../../services/api';
 
-const TablePassport = ({ data }) => {
-  const [showModal, setShowModal] = useState(false);
+const TablePassport = ({ data, fetchPassports }) => {
+  const [loading, setLoading] = useState(false);
 
   const handleBuy = async (passportId) => {
-    await api.put(`/passport/buy/${passportId}`);
-
-    setShowModal(true);
+    setLoading({ load: true, id: passportId });
+    await api
+      .put(`/passport/buy/${passportId}`)
+      .then(() => {
+        toast.success('Compra confirmada!');
+        fetchPassports();
+      })
+      .catch((err) => {
+        toast.error(err.response.data.error.message);
+        setLoading(false);
+      });
   };
 
   return (
     <Container>
-      <Modal show={showModal}>
-        <Modal.Header closeButton>
-          <Modal.Title>Compra Passaporte</Modal.Title>
-        </Modal.Header>
-
-        <Modal.Body>
-          <p>Passaporte comprado com sucesso!</p>
-        </Modal.Body>
-
-        <Modal.Footer>
-          <Button variant="success" onClick={() => window.location.reload()}>
-            Ok
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      <ToastContainer />
       <TableWrapper>
         <Header>
-          <img src={ticket} alt="ticket-logo" />
+          <img src={ticket} alt="logo" />
           <h1>Passaportes</h1>
         </Header>
         <Table striped borderless hover responsive>
@@ -68,7 +65,11 @@ const TablePassport = ({ data }) => {
                 <td>
                   {passport.status === 'Quoted' && (
                     <Button variant="success" onClick={() => handleBuy(passport.id)}>
-                      Comprar
+                      {loading.load && loading.id === passport.id ? (
+                        <Loader width={50} height={20} show={loading.load} />
+                      ) : (
+                        'Comprar'
+                      )}
                     </Button>
                   )}
                 </td>

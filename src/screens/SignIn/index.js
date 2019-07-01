@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Form, Col } from 'react-bootstrap';
 
+import { ToastContainer, toast } from 'react-toastify';
+
 import {
   Container, FormWrapper, ButtonWrapper, LinkWrapper,
 } from './style';
@@ -9,9 +11,12 @@ import {
 import api from '../../services/api';
 import { login } from '../../services/auth';
 
+import Loader from '../../components/Loader';
+
 const SignIn = () => {
   const [emailUsername, setEmailUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = async () => {
     const request = {
@@ -24,12 +29,20 @@ const SignIn = () => {
       request.username = emailUsername;
     }
 
-    const session = await api.post('/session', request);
-    login(session.data.data);
+    setLoading(true);
+
+    await api
+      .post('/session', request)
+      .then(({ data }) => login(data.data))
+      .catch((err) => {
+        toast.error(err.response.data.error.message);
+        setLoading(false);
+      });
   };
 
   return (
     <Container>
+      <ToastContainer />
       <FormWrapper>
         <Form as={Col} sm="12">
           <Form.Group as={Col} sm="12" controlId="">
@@ -59,7 +72,7 @@ const SignIn = () => {
           <ButtonWrapper>
             {' '}
             <Button onClick={handleLogin} variant="success">
-              Entrar
+              {loading ? <Loader width={50} height={20} show={loading} /> : 'Entrar'}
             </Button>
           </ButtonWrapper>
         </Form>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Form, Col } from 'react-bootstrap';
 
+import { ToastContainer, toast } from 'react-toastify';
 import {
   Container, FormWrapper, ButtonWrapper, LinkWrapper,
 } from './style';
@@ -9,15 +10,19 @@ import {
 import api from '../../services/api';
 import { login } from '../../services/auth';
 
+import Loader from '../../components/Loader';
+
 const SignUp = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [age, setAge] = useState('');
   const [isStudent, setIsStudent] = useState('');
+  const [age, setAge] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
+    setLoading(true);
     const request = {
       name,
       username,
@@ -27,18 +32,29 @@ const SignUp = () => {
       is_student: isStudent,
     };
 
-    const user = await api.post('/user', request);
-
-    const session = await api.post('/session', {
-      email: user.data.data.email,
-      password: user.data.data.password,
-    });
-
-    login(session.data.data);
+    await api
+      .post('/user', request)
+      .then(async ({ data }) => {
+        await api
+          .post('/session', {
+            email: data.data.email,
+            password: data.data.password,
+          })
+          .then(({ data: session }) => login(session.data))
+          .catch(() => {
+            toast.error('Erro ao fazer login');
+            setLoading(false);
+          });
+      })
+      .catch((err) => {
+        toast.error(err.response.data.error.message);
+        setLoading(false);
+      });
   };
 
   return (
     <Container>
+      <ToastContainer />
       <FormWrapper>
         <Form as={Col} sm="12">
           <Form.Row>
@@ -108,7 +124,7 @@ const SignUp = () => {
           <ButtonWrapper>
             {' '}
             <Button onClick={handleSubmit} variant="success">
-              Cadastrar
+              {loading ? <Loader width={50} height={20} show={loading} /> : 'Cadastrar'}
             </Button>
           </ButtonWrapper>
         </Form>

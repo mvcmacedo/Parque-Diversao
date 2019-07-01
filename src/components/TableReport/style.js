@@ -11,7 +11,6 @@ export const Header = Styled.div`
   display: flex;
   justify-content: space-between;
   background: #333333;
-  width: 100%;
   padding: 2%;
   color: #a6a6a6;
 `;
@@ -26,7 +25,7 @@ export const Thead = Styled.thead`
 `;
 
 export const TableWrapper = Styled.div`
-  margin: 2%;
+  margin: 2% 0;
   background: #f2f2f2;
   border: 1px solid #a6a6a6;
   box-shadow: 1px 1px 4px #666666;

@@ -1,40 +1,34 @@
 import React, { useState } from 'react';
-import {
-  Form, Col, Button, Modal,
-} from 'react-bootstrap';
+import { Form, Col, Button } from 'react-bootstrap';
 
+import { ToastContainer, toast } from 'react-toastify';
 import { Container, FormWrapper, ButtonWrapper } from './style';
 
 import api from '../../services/api';
+import Loader from '../../components/Loader';
 
 const Validate = () => {
   const [code, setCode] = useState('');
-  const [showModal, setShowModal] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleValidation = async () => {
-    const validate = await api.post('/passport/validate', { code });
-
-    setShowModal(validate.data.data);
+    setLoading(true);
+    await api
+      .post('/passport/validate', { code })
+      .then(() => {
+        toast.success('Passaporte validado com sucesso!');
+        setLoading(false);
+        setCode('');
+      })
+      .catch((err) => {
+        toast.error(err.response.data.error.message);
+        setLoading(false);
+      });
   };
 
   return (
     <Container>
-      <Modal show={showModal}>
-        <Modal.Header closeButton>
-          <Modal.Title>Validar Passaporte</Modal.Title>
-        </Modal.Header>
-
-        <Modal.Body>
-          <p>Passaporte validado com sucesso! Uma entrada foi adicionada.</p>
-        </Modal.Body>
-
-        <Modal.Footer>
-          <Button variant="success" onClick={() => setShowModal(false)}>
-            Ok
-          </Button>
-        </Modal.Footer>
-      </Modal>
-
+      <ToastContainer />
       <FormWrapper>
         <Form as={Col} sm="12">
           <Form.Group as={Col} sm="12" controlId="">
@@ -50,7 +44,7 @@ const Validate = () => {
           <ButtonWrapper>
             {' '}
             <Button onClick={handleValidation} variant="success">
-              Validar
+              {loading ? <Loader width={50} height={20} show={loading} /> : 'Validar'}
             </Button>
           </ButtonWrapper>
         </Form>

@@ -8,12 +8,12 @@ export const Container = Styled.div`
 export const FormWrapper = Styled.div`
   display: flex;
   justify-content: center;
-  width: 35%;
+  width: 60%;
   background: #fff;
-  padding: 2%;
+  padding: 1%;
   margin: 2%;
   border: 2px solid #d2d2d2;
-  border-radius: 3%;
+  
 `;
 
 export const ButtonWrapper = Styled.div`

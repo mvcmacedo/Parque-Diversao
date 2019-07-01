@@ -4,6 +4,9 @@ import moment from 'moment';
 
 import { Table } from 'react-bootstrap';
 
+import { ToastContainer, toast } from 'react-toastify';
+import Loader from '../../components/Loader';
+
 import {
   Container, Thead, Th, Header, TableWrapper,
 } from './style';
@@ -13,11 +16,16 @@ import promo from '../../assets/promotion.png';
 
 const Promotion = () => {
   const [promotions, setPromotions] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const fetchPromotions = async () => {
-    const promotionList = await api.get('/promotion');
-
-    setPromotions(promotionList.data.data);
+    await api
+      .get('/promotion')
+      .then(({ data }) => {
+        setLoading(false);
+        setPromotions(data.data);
+      })
+      .catch(() => toast.error('Erro ao listar promoções.'));
   };
 
   useEffect(() => {
@@ -25,50 +33,56 @@ const Promotion = () => {
   }, []);
 
   const handleStatus = async (id, is_active) => {
-    await api.put(`/promotion/${id}`, { is_active });
-
-    await fetchPromotions();
+    await api
+      .put(`/promotion/${id}`, { is_active })
+      .then(async () => fetchPromotions())
+      .catch(() => toast.error('Erro ao atualizar promoção.'));
   };
 
   return (
     <Container>
-      <TableWrapper>
-        <Header>
-          <img src={promo} alt="ticket-logo" />
-          <h1>Promoções</h1>
-        </Header>
-        <Table striped borderless hover responsive>
-          <Thead>
-            <tr>
-              <Th>#</Th>
-              <Th>Nome</Th>
-              <Th>Apartir do dia</Th>
-              <Th>Mínimo de dias</Th>
-              <Th>Percentual</Th>
-              <Th>Criada em</Th>
-              <Th>Status</Th>
-            </tr>
-          </Thead>
-          <tbody>
-            {promotions.map(promotion => (
-              <tr key={promotion.id}>
-                <td>{promotion.id}</td>
-                <td>{promotion.name}</td>
-                <td>{promotion.start_day}</td>
-                <td>{promotion.minimum_days}</td>
-                <td>{promotion.percentual}</td>
-                <td>{moment(promotion.createdAt).format('DD/MM/YYYY')}</td>
-                <td>
-                  <Switch
-                    onChange={e => handleStatus(promotion.id, e)}
-                    checked={promotion.is_active}
-                  />
-                </td>
+      <ToastContainer />
+      {loading ? (
+        <Loader width={100} height={100} show={loading} />
+      ) : (
+        <TableWrapper>
+          <Header>
+            <img src={promo} alt="ticket-logo" />
+            <h1>Promoções</h1>
+          </Header>
+          <Table striped borderless hover responsive>
+            <Thead>
+              <tr>
+                <Th>#</Th>
+                <Th>Nome</Th>
+                <Th>Apartir do dia</Th>
+                <Th>Mínimo de dias</Th>
+                <Th>Percentual</Th>
+                <Th>Criada em</Th>
+                <Th>Status</Th>
               </tr>
-            ))}
-          </tbody>
-        </Table>
-      </TableWrapper>
+            </Thead>
+            <tbody>
+              {promotions.map(promotion => (
+                <tr key={promotion.id}>
+                  <td>{promotion.id}</td>
+                  <td>{promotion.name}</td>
+                  <td>{promotion.start_day}</td>
+                  <td>{promotion.minimum_days}</td>
+                  <td>{promotion.percentual}</td>
+                  <td>{moment(promotion.createdAt).format('DD/MM/YYYY')}</td>
+                  <td>
+                    <Switch
+                      onChange={e => handleStatus(promotion.id, e)}
+                      checked={promotion.is_active}
+                    />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </TableWrapper>
+      )}
     </Container>
   );
 };

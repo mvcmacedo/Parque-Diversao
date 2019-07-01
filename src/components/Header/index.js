@@ -18,7 +18,7 @@ const LoginArea = isAuthenticated() ? (
       Olá,
       {' '}
       {''}
-      {getUser().username}
+      {getUser().name}
     </UserName>
     <div>
       <Button variant="light" onClick={logout}>
@@ -46,7 +46,7 @@ const Header = () => (
         </Link>
       </LogoWrapper>
       <TitleWrapper>
-        <Title>PSA</Title>
+        <Title>Parque Diversão</Title>
       </TitleWrapper>
       <Login>{LoginArea}</Login>
     </Content>
