@@ -1,19 +1,29 @@
 # Parque-Diversao
-Trabalho final da disciplina de Programação de Software Aplicado
+Trabalho final da disciplina de Programação de Software Aplicado.
 
+## Demo: https://parque-diversao.herokuapp.com/
 
-## Installation
+## Instalação
 
-
+```bash
+cd backend
+yarn 
+npx sequelize db:migrate
+yarn dev
 ```
+Criar o arquivo .env, utilizando o template contido no arquivo .env.sample.
+
+```bash
+cd frontend
+yarn 
+yarn start
 ```
+Criar o arquivo .env, com a variável ambiente REACT_APP_API_URL apontando para url desejada.
 
-## Usage
+## Tecnologias
 
-```
-```
+Backend: Node.js
 
-## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+Frontend: ReactJs
 
-Please make sure to update tests as appropriate.
+Banco de Dados: MySQL
